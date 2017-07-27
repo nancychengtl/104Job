@@ -24,19 +24,13 @@ from scipy.sparse.linalg import svds
 # In[3]:
 
 
-ratings=pd.read_csv('../../data/ratings.csv')
-movies=pd.read_csv('../../data/movies.csv')
-tags=pd.read_csv('../../data/tags.csv')
-genome_scores=pd.read_csv('../../data/genome-scores.csv')
-genome_tags=pd.read_csv('../../data/genome-tags.csv')
-
-
-# In[4]:
+ratings = pd.read_csv('../../data/movie/ratings.csv')
+movies = pd.read_csv('../../data/movie/movies.csv')
+tags = pd.read_csv('../../data/movie/tags.csv')
+genome_scores = pd.read_csv('../../data/movie/genome-scores.csv')
+genome_tags = pd.read_csv('../../data/movie/genome-tags.csv')
 
 ratings.head()
-
-
-# In[5]:
 
 movies.head()
 
