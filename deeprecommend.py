@@ -25,9 +25,9 @@ from scipy.sparse.linalg import svds
 # genome_tags = pd.read_csv('data/genome-tags.csv')
 
 #used for amazon
-ratings = pd.read_csv('../104/score_log.csv')
+ratings = pd.read_csv('../104/score_log.csv', delimiter='|')
 print ratings.head()
-jobs = pd.read_csv('../104/job/job_description.csv')
+jobs = pd.read_csv('../104/job/job_description.csv', delimiter='|')
 print jobs.head()
 # print all table of rating and jobs
 
