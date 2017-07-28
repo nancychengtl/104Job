@@ -17,21 +17,27 @@ import pprint
 from sklearn.utils.extmath import randomized_svd
 from scipy.sparse.linalg import svds
 
+# used for local
+# ratings = pd.read_csv('data/user_log.csv')
+# jobs = pd.read_csv('data/job_description_20170331.csv')
+# tags = pd.read_csv('data/tags.csv')
+# genome_scores = pd.read_csv('data/genome-scores.csv')
+# genome_tags = pd.read_csv('data/genome-tags.csv')
 
-ratings = pd.read_csv('data/user_log.csv')
-jobs = pd.read_csv('data/job_description_20170331.csv')
-tags = pd.read_csv('data/tags.csv')
-genome_scores = pd.read_csv('data/genome-scores.csv')
-genome_tags = pd.read_csv('data/genome-tags.csv')
+#used for amazon
+ratings = pd.read_csv('../104/user_log.csv')
+jobs = pd.read_csv('../104/job/job_description.csv')
 
-ratings.head()
-jobs.head()
+# print all table of rating and jibs
+# print ratings.head()
+# print jobs.head()
+
 
 # Create dictionary of Movie ID's and Titles so that we can have titles in Ratings dataframe:
 dictionary = jobs.set_index('jobno').to_dict()['job']
 print dictionary
 
-ratings['jobName']=ratings['jobNo'].map(dictionary)
+ratings['jobName'] = ratings['jobNo'].map(dictionary)
 ratings.head()
 
 
