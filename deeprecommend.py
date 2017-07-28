@@ -26,29 +26,24 @@ from scipy.sparse.linalg import svds
 
 #used for amazon
 ratings = pd.read_csv('../104/score_log.csv')
+print ratings.head()
 jobs = pd.read_csv('../104/job/job_description.csv')
-
-# print all table of rating and jibs
-# print ratings.head()
-# print jobs.head()
+print jobs.head()
+# print all table of rating and jobs
 
 
-# Create dictionary of Movie ID's and Titles so that we can have titles in Ratings dataframe:
+# Create dictionary of job ID's and Titles so that we can have titles in Ratings dataframe:
 dictionary = jobs.set_index('jobno').to_dict()['job']
 print dictionary
 
 ratings['jobName'] = ratings['jobNo'].map(dictionary)
-ratings.head()
-
+print ratings.head()
 
 # Save this new DataFrame to a csv file for future use:
 
 ratings.to_csv('newDF.csv', sep=',', index=False)
 
-
 # Use only a subset of movies for computation reasons - using top 600 movies:
-
-# In[11]:
 
 n = 600
 top_n = ratings.jobNo.value_counts().index[:n]
