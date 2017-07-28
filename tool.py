@@ -2,9 +2,16 @@
 import csv
 
 def setUpData():
+    #amazon
     file = open("../104/user_log.csv", 'r')
     writer = csv.writer(open("../104/score_log.csv", 'w'))
-    for row in csv.reader(file):
+
+    #local
+    # file = open("data/user_log.csv", 'r')
+    # writer = csv.writer(open("data/score_log.csv", 'w'))
+
+
+    for row in csv.reader(file, delimiter='|'):
         if row[1] == "applyJob":
             row = [x.replace('applyJob', '5') if x == 'applyJob' else x for x in row]
             writer.writerow(row)
