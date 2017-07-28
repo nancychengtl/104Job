@@ -27,7 +27,7 @@ from scipy.sparse.linalg import svds
 #used for amazon
 ratings = pd.read_csv('../104/score_log.csv', delimiter='|')
 print ratings.head()
-jobs = pd.read_csv('../104/job/job_description.csv', delimiter='|')
+jobs = pd.read_csv('../104/job/job_structured_info.csv', delimiter='|')
 print jobs.head()
 # print all table of rating and jobs
 
