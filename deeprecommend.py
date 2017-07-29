@@ -25,16 +25,15 @@ from scipy.sparse.linalg import svds
 # genome_tags = pd.read_csv('data/genome-tags.csv')
 
 #used for amazon
-ratings = pd.read_csv('../104/score_log.csv', delimiter='|')
+ratings = pd.read_csv('../104/score_log.csv')
 print ratings.head()
-jobs = pd.read_csv('../104/job/job_structured_info.csv', delimiter='|')
+jobs = pd.read_csv('../104/job/jobs_nancy.csv')
 print jobs.head()
 # print all table of rating and jobs
 
 
 # Create dictionary of job ID's and Titles so that we can have titles in Ratings dataframe:
-dictionary = jobs.set_index('jobno').to_dict()['job']
-print dictionary
+dictionary = jobs.set_index('jobNo').to_dict()['job']
 
 ratings['jobName'] = ratings['jobNo'].map(dictionary)
 print ratings.head()
@@ -52,29 +51,17 @@ ratings.head()
 
 
 # Create wide matrix:
-
-# In[12]:
-
-wideMatrix = pd.pivot_table(ratings,values='rating',
-                                index=['uid','jobNo'],
-                                aggfunc=np.mean).unstack()
-
-
-# In[13]:
+wideMatrix = pd.pivot_table(ratings, values='action', index=['uid','jobNo'], aggfunc=np.mean).unstack()
 
 wideMatrix.ix[0:5, 0:5]
 
 
 # ** Fill NaN values with 0: **
 
-# In[14]:
-
 wideMatrix2=wideMatrix.fillna(0)
 
-
-# In[15]:
-
-wideMatrix2.head()
+print "finish wideMatrix"
+print wideMatrix2.head()
 
 
 # ** de-mean  **
@@ -87,7 +74,6 @@ R_demeaned = R - user_ratings_mean.reshape(-1, 1)
 
 # ** SVD decomposition of the demeaned matrix **
 
-# In[17]:
 
 U, sigma, Vt = svds(R_demeaned, k = 50)
 
@@ -101,8 +87,9 @@ sigma = np.diag(sigma)
 all_user_predicted_ratings = np.dot(np.dot(U, sigma), Vt) + user_ratings_mean.reshape(-1, 1)
 preds_df = pd.DataFrame(all_user_predicted_ratings, columns = wideMatrix2.columns)
 
+print "preds_df"
 
-ratings.head()
+print ratings.head()
 
 
 
@@ -113,9 +100,9 @@ def recommend_movies(predictions_df, uid, movies_df, original_ratings_df, num_re
     sorted_user_predictions = predictions_df.iloc[user_row_number].sort_values(ascending=False)
 
     # Get the user's data and merge in the movie information.
-    user_data = original_ratings_df[original_ratings_df.userId == (uid)]
+    user_data = original_ratings_df[original_ratings_df.uid == (uid)]
     user_full = (user_data.merge(movies_df, how = 'left', left_on = 'jobNo', right_on = 'jobNo').
-                     sort_values(['rating'], ascending=False)
+                     sort_values(['action'], ascending=False)
                  )
 
     print('User {0} has already rated {1} movies.'.format(uid, user_full.shape[0]))
@@ -140,7 +127,7 @@ def recommend_movies(predictions_df, uid, movies_df, original_ratings_df, num_re
 
 # In[21]:
 
-already_rated, predictions = recommend_movies(preds_df, 125794, jobs, ratings, 10)
+already_rated, predictions = recommend_movies(preds_df, 8589936569, jobs, ratings, 10)
 
 
 # In[22]:
